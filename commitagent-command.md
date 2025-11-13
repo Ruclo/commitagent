@@ -21,20 +21,19 @@ If the environment variable `COMMITAGENT_SPEC` is set, follow those custom guide
 
 ## Output Format
 
-Return ONLY the commit message text, with no additional commentary or markdown formatting.
+**CRITICAL**: Return ONLY the raw commit message text with NO markdown formatting, NO code blocks, NO backticks, and NO indentation.
+
+Your output should be plain text that can be directly used as a git commit message.
 
 Structure:
-```
 <type>: <short summary>
 
 <detailed explanation if needed>
 <why this change was made>
 <any important context>
-```
 
-## Example Output
+Example (return text exactly like this, with NO surrounding backticks or formatting):
 
-```
 feat: Add user authentication with JWT tokens
 
 Implement JWT-based authentication to replace the session-based approach.
@@ -44,6 +43,5 @@ This provides better scalability and allows for stateless API design.
 - Update login endpoint to return tokens
 - Add middleware for token verification
 - Include token refresh mechanism
-```
 
-Now analyze the current git repository and generate an appropriate commit message.
+Now analyze the current git repository and generate an appropriate commit message following the format above.
