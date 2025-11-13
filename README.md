@@ -10,7 +10,8 @@ CommitAgent is a CLI tool that uses Claude AI to generate intelligent, context-a
 
 - 🤖 AI-generated commit messages using Claude
 - ✏️ Interactive editing before committing
-- 📝 Custom commit specifications/guidelines
+- 📝 Conventional Commits format by default
+- 🎨 Custom commit specifications/guidelines (optional)
 - ✍️ Optional automatic Signed-off-by line
 - ⚙️ Simple configuration management
 
@@ -58,10 +59,16 @@ This will:
 
 #### Set Commit Specification
 
-Define custom guidelines for how Claude should generate commit messages:
+By default, CommitAgent uses the **Conventional Commits** specification. You can override this with custom guidelines:
 
 ```bash
-commitagent config set commit-spec "Use conventional commits format with type(scope): description"
+commitagent config set commit-spec "Use Angular commit style with type(scope): description and detailed body"
+```
+
+To view the current specification:
+
+```bash
+commitagent config view commit-spec
 ```
 
 #### Enable Auto Sign-off
@@ -104,7 +111,7 @@ commitagent help
 
 | Key | Type | Description |
 |-----|------|-------------|
-| `commit-spec` | string | Custom commit message specification/guidelines for Claude |
+| `commit-spec` | string | Custom commit message specification/guidelines for Claude (defaults to Conventional Commits) |
 | `auto-signoff` | enabled/disabled | Automatically add Signed-off-by line to commits |
 
 ## How It Works
@@ -113,7 +120,7 @@ commitagent help
 
 2. **Command Installation**: If the `/commitagent` Claude command doesn't exist, it's automatically downloaded and installed to `~/.claude/commands/`
 
-3. **AI Generation**: Claude analyzes your git status and diff to generate a contextual commit message, using your custom `commit-spec` if configured
+3. **AI Generation**: Claude analyzes your git status and diff to generate a contextual commit message following the Conventional Commits specification (or your custom `commit-spec` if configured)
 
 4. **Interactive Editing**: The generated message opens in your preferred editor (`$EDITOR` or `$VISUAL`, defaults to vim)
 
