@@ -205,6 +205,14 @@ def open_in_editor(content: str) -> Optional[str]:
         # Open editor
         subprocess.run([editor, temp_path], check=True)
 
+        # Ask for confirmation before proceeding
+        print("\nProceed with this commit message? (y/n): ", end='', flush=True)
+        confirmation = input().strip().lower()
+
+        if confirmation not in ('y', 'yes'):
+            print("Commit cancelled")
+            return None
+
         # Read edited content
         with open(temp_path, 'r') as f:
             edited_content = f.read().strip()
