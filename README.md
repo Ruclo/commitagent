@@ -1,10 +1,10 @@
-# CommitAgent
+# CommitAid
 
 AI-powered Git commit message generator using Claude AI.
 
 ## Overview
 
-CommitAgent is a CLI tool that uses Claude AI to generate intelligent, context-aware commit messages based on your staged changes. It analyzes your git status and diff, generates a commit message, and lets you edit it before committing.
+CommitAid is a CLI tool that uses Claude AI to generate intelligent, context-aware commit messages based on your staged changes. It analyzes your git status and diff, generates a commit message, and lets you edit it before committing.
 
 ## Features
 
@@ -23,17 +23,17 @@ CommitAgent is a CLI tool that uses Claude AI to generate intelligent, context-a
 2. **Git** - Must be installed and in PATH
 3. **Claude CLI** - Install from [Claude Code documentation](https://docs.claude.com/en/docs/claude-code)
 
-### Install CommitAgent
+### Install CommitAid
 
 ```bash
-pip install commitagent
+pip install commitaid
 ```
 
 Or install from source:
 
 ```bash
-git clone https://github.com/yourusername/commitagent.git
-cd commitagent
+git clone https://github.com/yourusername/commitaid.git
+cd commitaid
 pip install -e .
 ```
 
@@ -44,13 +44,13 @@ pip install -e .
 Navigate to your git repository and run:
 
 ```bash
-commitagent
+commitaid
 ```
 
 This will:
 1. Check if you're in a git repository
 2. Verify Claude CLI is installed
-3. Install the `/commitagent` command if needed
+3. Install the `/commitaid` command if needed
 4. Generate a commit message using Claude AI
 5. Open your editor to review/edit the message
 6. Create the git commit
@@ -59,16 +59,16 @@ This will:
 
 #### Set Commit Specification
 
-By default, CommitAgent uses the **Conventional Commits** specification. You can override this with custom guidelines:
+By default, CommitAid uses the **Conventional Commits** specification. You can override this with custom guidelines:
 
 ```bash
-commitagent config set commit-spec "Use Angular commit style with type(scope): description and detailed body"
+commitaid config set commit-spec "Use Angular commit style with type(scope): description and detailed body"
 ```
 
 To view the current specification:
 
 ```bash
-commitagent config view commit-spec
+commitaid config view commit-spec
 ```
 
 #### Enable Auto Sign-off
@@ -76,13 +76,13 @@ commitagent config view commit-spec
 Automatically add a `Signed-off-by` line to commits:
 
 ```bash
-commitagent config set auto-signoff enabled
+commitaid config set auto-signoff enabled
 ```
 
 To disable:
 
 ```bash
-commitagent config set auto-signoff disabled
+commitaid config set auto-signoff disabled
 ```
 
 #### View Configuration
@@ -90,13 +90,13 @@ commitagent config set auto-signoff disabled
 View all configuration:
 
 ```bash
-commitagent config view
+commitaid config view
 ```
 
 View specific configuration:
 
 ```bash
-commitagent config view commit-spec
+commitaid config view commit-spec
 ```
 
 ### Help
@@ -104,7 +104,7 @@ commitagent config view commit-spec
 Display help information:
 
 ```bash
-commitagent help
+commitaid help
 ```
 
 ## Configuration Keys
@@ -116,25 +116,25 @@ commitagent help
 
 ## How It Works
 
-1. **Validation**: CommitAgent checks that you're in a git repository and that required tools (git, claude) are installed
+1. **Validation**: CommitAid checks that you're in a git repository and that required tools (git, claude) are installed
 
-2. **Command Installation**: If the `/commitagent` Claude command doesn't exist, it's automatically downloaded and installed to `~/.claude/commands/`
+2. **Command Installation**: If the `/commitaid` Claude command doesn't exist, it's automatically downloaded and installed to `~/.claude/commands/`
 
 3. **AI Generation**: Claude analyzes your git status and diff to generate a contextual commit message following the Conventional Commits specification (or your custom `commit-spec` if configured)
 
 4. **Interactive Editing**: The generated message opens in your preferred editor (`$EDITOR` or `$VISUAL`, defaults to vim)
 
-5. **Commit**: After you save and close the editor, CommitAgent creates the git commit with your message (and optional sign-off)
+5. **Commit**: After you save and close the editor, CommitAid creates the git commit with your message (and optional sign-off)
 
 ## Environment Variables
 
 - `EDITOR` or `VISUAL` - Preferred text editor (defaults to vim)
-- `COMMITAGENT_SPEC` - Commit specification (set automatically from config)
+- `COMMITAID_SPEC` - Commit specification (set automatically from config)
 
 ## File Locations
 
-- Configuration: `~/.config/commitagent/config.json`
-- Claude command: `~/.claude/commands/commitagent.md`
+- Configuration: `~/.config/commitaid/config.json`
+- Claude command: `~/.claude/commands/commitaid.md`
 - Temporary edit file: `.git/COMMIT_EDITMSG_*.txt`
 
 ## Examples
@@ -146,14 +146,14 @@ commitagent help
 git add .
 
 # Generate and create commit
-commitagent
+commitaid
 ```
 
 ### With Custom Specification
 
 ```bash
 # Set your commit style
-commitagent config set commit-spec "
+commitaid config set commit-spec "
 - Use conventional commits (feat:, fix:, docs:, etc.)
 - Keep first line under 72 characters
 - Include ticket number if available
@@ -161,17 +161,17 @@ commitagent config set commit-spec "
 "
 
 # Generate commits following your specification
-commitagent
+commitaid
 ```
 
 ### With Auto Sign-off
 
 ```bash
 # Enable sign-off
-commitagent config set auto-signoff enabled
+commitaid config set auto-signoff enabled
 
 # All commits will include Signed-off-by line
-commitagent
+commitaid
 ```
 
 ## Troubleshooting
@@ -182,7 +182,7 @@ Install Claude CLI from the [official documentation](https://docs.claude.com/en/
 
 ### Not in a git repository
 
-Ensure you're running `commitagent` from within a git repository:
+Ensure you're running `commitaid` from within a git repository:
 
 ```bash
 git rev-parse --git-dir
@@ -202,8 +202,8 @@ export EDITOR=nano  # or vim, emacs, code --wait, etc.
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/commitagent.git
-cd commitagent
+git clone https://github.com/yourusername/commitaid.git
+cd commitaid
 
 # Install in editable mode
 pip install -e .
@@ -212,9 +212,9 @@ pip install -e .
 ### Project Structure
 
 ```
-commitagent/
+commitaid/
 ├── src/
-│   └── commitagent/
+│   └── commitaid/
 │       ├── __init__.py      # Package initialization
 │       ├── cli.py           # CLI entry point and argument parsing
 │       ├── config.py        # Configuration management

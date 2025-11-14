@@ -1,4 +1,4 @@
-"""Main workflow logic for CommitAgent."""
+"""Main workflow logic for CommitAid."""
 
 import os
 import subprocess
@@ -8,8 +8,8 @@ from pathlib import Path
 from typing import Optional
 
 
-# Placeholder URL for the commitagent slash command
-COMMITAGENT_COMMAND_URL = "https://raw.githubusercontent.com/Ruclo/commitagent/main/commitagent-command.md"
+# Placeholder URL for the commitaid slash command
+COMMITAID_COMMAND_URL = "https://raw.githubusercontent.com/Ruclo/commitaid/main/commitaid-command.md"
 
 # Default commit specification (Conventional Commits)
 DEFAULT_COMMIT_SPEC = """The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
@@ -100,23 +100,23 @@ def get_git_root() -> Optional[Path]:
 
 
 def check_claude_command_exists() -> bool:
-    """Check if /commitagent command exists in Claude CLI."""
+    """Check if /commitaid command exists in Claude CLI."""
     claude_commands_dir = Path.home() / ".claude" / "commands"
-    command_file = claude_commands_dir / "commitagent.md"
+    command_file = claude_commands_dir / "commitaid.md"
     return command_file.exists()
 
 
 def install_claude_command() -> bool:
-    """Install the /commitagent command for Claude CLI."""
+    """Install the /commitaid command for Claude CLI."""
     claude_commands_dir = Path.home() / ".claude" / "commands"
     claude_commands_dir.mkdir(parents=True, exist_ok=True)
-    command_file = claude_commands_dir / "commitagent.md"
+    command_file = claude_commands_dir / "commitaid.md"
 
-    print("Installing /commitagent command for Claude CLI...")
+    print("Installing /commitaid command for Claude CLI...")
     try:
         # Fetch the command file from GitHub
         result = subprocess.run(
-            ["curl", "-fsSL", COMMITAGENT_COMMAND_URL],
+            ["curl", "-fsSL", COMMITAID_COMMAND_URL],
             check=True,
             capture_output=True,
             text=True
@@ -125,7 +125,7 @@ def install_claude_command() -> bool:
         with open(command_file, 'w') as f:
             f.write(result.stdout)
 
-        print("✓ /commitagent command installed successfully")
+        print("✓ /commitaid command installed successfully")
         return True
     except subprocess.CalledProcessError as e:
         print(f"Error: Failed to download command file: {e}")
@@ -135,9 +135,9 @@ def install_claude_command() -> bool:
         return False
 
 
-def run_claude_commitagent(commit_spec: Optional[str] = None) -> Optional[str]:
+def run_claude_commitaid(commit_spec: Optional[str] = None) -> Optional[str]:
     """
-    Run Claude CLI with /commitagent command.
+    Run Claude CLI with /commitaid command.
 
     Args:
         commit_spec: Optional commit specification to pass to Claude.
@@ -147,12 +147,12 @@ def run_claude_commitagent(commit_spec: Optional[str] = None) -> Optional[str]:
         Generated commit message or None if failed
     """
     env = os.environ.copy()
-    # Always set COMMITAGENT_SPEC, using default if not provided
-    env["COMMITAGENT_SPEC"] = commit_spec if commit_spec else DEFAULT_COMMIT_SPEC
+    # Always set COMMITAID_SPEC, using default if not provided
+    env["COMMITAID_SPEC"] = commit_spec if commit_spec else DEFAULT_COMMIT_SPEC
 
     try:
         result = subprocess.run(
-            ["claude", "-p", "/commitagent"],
+            ["claude", "-p", "/commitaid"],
             check=True,
             capture_output=True,
             text=True,
@@ -250,7 +250,7 @@ def run_git_commit(message: str, signoff: bool = False) -> bool:
 
 def run_workflow(commit_spec: Optional[str] = None, auto_signoff: bool = False):
     """
-    Run the main CommitAgent workflow.
+    Run the main CommitAid workflow.
 
     Args:
         commit_spec: Optional commit specification
@@ -268,7 +268,7 @@ def run_workflow(commit_spec: Optional[str] = None, auto_signoff: bool = False):
     if not check_staged_changes():
         raise WorkflowError(
             "No staged changes found\n"
-            "Use 'git add' to stage changes before running commitagent"
+            "Use 'git add' to stage changes before running commitaid"
         )
 
     # Display configuration
@@ -285,14 +285,14 @@ def run_workflow(commit_spec: Optional[str] = None, auto_signoff: bool = False):
             "Install it from: https://docs.claude.com/en/docs/claude-code"
         )
 
-    # Check if /commitagent command exists, install if not
+    # Check if /commitaid command exists, install if not
     if not check_claude_command_exists():
         if not install_claude_command():
-            raise WorkflowError("Failed to install /commitagent command")
+            raise WorkflowError("Failed to install /commitaid command")
 
     # Run Claude to generate commit message
     print("Generating commit message with Claude...")
-    commit_message = run_claude_commitagent(commit_spec)
+    commit_message = run_claude_commitaid(commit_spec)
 
     if not commit_message:
         raise WorkflowError("Failed to generate commit message")

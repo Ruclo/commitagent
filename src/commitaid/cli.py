@@ -1,4 +1,4 @@
-"""CLI interface for CommitAgent."""
+"""CLI interface for CommitAid."""
 
 import sys
 from .config import Config
@@ -8,10 +8,10 @@ from .workflow import run_workflow, WorkflowError
 def print_help():
     """Print help message."""
     help_text = """
-CommitAgent - AI-powered Git commit message generator
+CommitAid - AI-powered Git commit message generator
 
 USAGE:
-    commitagent [COMMAND] [OPTIONS]
+    commitaid [COMMAND] [OPTIONS]
 
 COMMANDS:
     (no command)              Generate a commit message using Claude AI
@@ -25,24 +25,24 @@ CONFIGURATION KEYS:
 
 EXAMPLES:
     # Generate a commit message
-    commitagent
+    commitaid
 
     # Set custom commit specification (overrides default Conventional Commits)
-    commitagent config set commit-spec "Use Angular style with JIRA ticket numbers"
+    commitaid config set commit-spec "Use Angular style with JIRA ticket numbers"
 
     # Enable auto sign-off
-    commitagent config set auto-signoff enabled
+    commitaid config set auto-signoff enabled
 
     # View all configuration
-    commitagent config view
+    commitaid config view
 
     # View specific configuration
-    commitagent config view commit-spec
+    commitaid config view commit-spec
 
 WORKFLOW:
     1. Checks if you're in a git repository
     2. Checks if Claude CLI is installed
-    3. Installs /commitagent command if needed
+    3. Installs /commitaid command if needed
     4. Runs Claude to generate commit message
     5. Opens editor for you to review/edit
     6. Creates git commit with the message
@@ -59,8 +59,8 @@ def handle_config(args: list):
     """Handle config subcommand."""
     if len(args) < 1:
         print("Error: config requires a subcommand (set or view)")
-        print("Usage: commitagent config set <key> <value>")
-        print("       commitagent config view [key]")
+        print("Usage: commitaid config set <key> <value>")
+        print("       commitaid config view [key]")
         sys.exit(1)
 
     subcommand = args[0]
@@ -69,7 +69,7 @@ def handle_config(args: list):
     if subcommand == "set":
         if len(args) < 3:
             print("Error: config set requires <key> and <value>")
-            print("Usage: commitagent config set <key> <value>")
+            print("Usage: commitaid config set <key> <value>")
             sys.exit(1)
 
         key = args[1]
@@ -104,7 +104,7 @@ def main():
     # Handle unknown commands
     if len(args) > 0 and not args[0].startswith("-"):
         print(f"Error: Unknown command '{args[0]}'")
-        print("Run 'commitagent help' for usage information")
+        print("Run 'commitaid help' for usage information")
         sys.exit(1)
 
     # Run main workflow

@@ -1,4 +1,4 @@
-"""Configuration management for CommitAgent."""
+"""Configuration management for CommitAid."""
 
 import json
 import os
@@ -7,9 +7,9 @@ from typing import Optional, Dict, Any
 
 
 class Config:
-    """Manages CommitAgent configuration."""
+    """Manages CommitAid configuration."""
 
-    CONFIG_DIR = Path.home() / ".config" / "commitagent"
+    CONFIG_DIR = Path.home() / ".config" / "commitaid"
     CONFIG_FILE = CONFIG_DIR / "config.json"
 
     VALID_KEYS = {
