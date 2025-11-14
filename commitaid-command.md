@@ -1,4 +1,4 @@
-# CommitAgent - AI Commit Message Generator
+# CommitAid - AI Commit Message Generator
 
 You are helping generate a git commit message based on the current staged changes.
 
@@ -17,7 +17,7 @@ Generate a commit message that:
 - Includes additional details in the body if the change is complex
 - Follows conventional commits format when appropriate (feat:, fix:, docs:, etc.)
 
-If the environment variable `COMMITAGENT_SPEC` is set, follow those custom guidelines instead of the defaults above.
+If the environment variable `COMMITAID_SPEC` is set, follow those custom guidelines instead of the defaults above.
 
 ## Output Format
 
